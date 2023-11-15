@@ -34,8 +34,9 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-/.idea/.gitignore
-/.idea/bookstore.iml
-/.idea/misc.xml
-/.idea/modules.xml
-/.idea/vcs.xml
+/.idea/*
+/.rspec
+
+# Ignore SQLite database files
+*.sqlite3
+*.sqlite
