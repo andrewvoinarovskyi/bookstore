@@ -1,7 +1,6 @@
-# app/controllers/sessions_controller.rb
-
 class SessionsController < ApplicationController
   def new
+    # Open login page
   end
 
   def create
