@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   def authenticate_user!
     unless current_user
       flash[:alert] = 'You must be signed in to access this page.'
-      redirect_to login_path
+      redirect_to login_page_path
     end
   end
 
