@@ -1,6 +1,7 @@
 <div class="book">
   <h2><%= book.title %></h2>
   <p><strong>Author:</strong> <%= book.author %></p>
+  <p><strong>Price:</strong> <%= number_to_currency(book.price) %></p>
   <p><%= link_to 'Details', book_path(book) %></p>
   <%= button_to 'Purchase', purchase_book_path(book), method: :post, class: 'btn btn-primary' %>
 </div>

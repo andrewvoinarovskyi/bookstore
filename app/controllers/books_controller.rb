@@ -16,10 +16,13 @@ class BooksController < ApplicationController
 
       order.order_items.create(book: @book, quantity: 1, item_price: @book.price)
       order.update(total_price: @book.price, status: 'completed')
-      redirect_to root_path, notice: 'Book was successfully purchased.'
+      redirect_to purchased_book_path
     else
       redirect_to login_path, alert: 'You must be logged in to purchase a book.'
     end
+  end
+
+  def purchased
   end
 
   private
