@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
 
     if user && user.authenticate(params[:password])
       log_in user
-      redirect_to root_path, notice: 'Logged in successfully.'
+      redirect_to purchased_books_books_path, notice: 'Logged in successfully.'
     else
       flash.now[:alert] = 'Invalid email or password'
       render :new

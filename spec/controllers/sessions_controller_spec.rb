@@ -33,9 +33,9 @@ RSpec.describe SessionsController, type: :controller do
         expect(session[:user_id]).to eq(user.id)
       end
 
-      it 'redirects to the root path' do
+      it 'redirects to the purchased books path' do
         post :create, params: { email: user.email, password: user.password }
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(purchased_books_books_path)
       end
     end
 
