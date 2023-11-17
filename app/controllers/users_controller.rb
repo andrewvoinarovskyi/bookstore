@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   def new
     if current_user
-      redirect_to root_path
+      redirect_to purchased_books_books_path
     else
       @user = User.new
     end
