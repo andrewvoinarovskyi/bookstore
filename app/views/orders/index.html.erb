@@ -1,0 +1,26 @@
+<%= link_to 'Back to Books', books_path %>
+
+<h1>Your Orders</h1>
+
+<% if @orders.any? %>
+  <table>
+    <thead>
+    <tr>
+      <th>Order Date</th>
+      <th>Total Price</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.created_at %></td>
+        <td><%= number_to_currency(order.total_price) %></td>
+        <td><%= order.status.capitalize %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No orders yet. Start shopping!</p>
+<% end %>

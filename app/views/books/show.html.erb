@@ -1,0 +1,7 @@
+<%= link_to 'Back to Books', books_path %>
+
+<%= render 'book_details', book: @book %>
+<%= button_to 'Purchase', purchase_book_path(@book), method: :post, class: 'btn btn-primary' %>
+
+<%= render 'reviews/form', book: @book %>
+<%= render 'reviews/list', reviews: @book.reviews %>

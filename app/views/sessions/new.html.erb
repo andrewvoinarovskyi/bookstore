@@ -1,0 +1,15 @@
+<%= link_to 'Back to Books', books_path %>
+
+<h1>Login</h1>
+
+<%= form_with(url: login_path, method: :post) do |form| %>
+  <%= form.label :email %>
+  <%= form.email_field :email %>
+
+  <%= form.label :password %>
+  <%= form.password_field :password %>
+
+  <%= form.submit 'Login', class: 'btn btn-primary' %>
+<% end %>
+
+<p>Don't have an account? <%= link_to 'Sign Up', new_user_path %></p>

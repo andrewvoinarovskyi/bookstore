@@ -13,7 +13,11 @@ class ReviewsController < ApplicationController
     if @review.save
       redirect_to @book, notice: 'Review was successfully created.'
     else
-      render :new
+      if review_params[:rating].empty?
+        redirect_to '/books/show', notice: 'Review creation was failed. Rating is required.'
+      else
+        redirect_to '/books/show', notice: 'Review creation was failed. Comment is required.'
+      end
     end
   end
 

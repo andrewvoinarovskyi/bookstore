@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
     if @user.save
       log_in @user
-      redirect_to root_path, notice: 'User was successfully created.'
+      redirect_to login_path, notice: 'User was successfully created.'
     else
       render :new
     end
