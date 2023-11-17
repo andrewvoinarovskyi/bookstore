@@ -1,0 +1,14 @@
+<% if reviews.any? %>
+  <h2>Reviews</h2>
+  <ul>
+    <% reviews.each do |review| %>
+      <li>
+        <strong><%= review.user.name %>:</strong><br/>
+        <%= "Rating: #{review.rating}" %><br/>
+        <%= "Comment: #{review.comment}" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No reviews yet. Be the first to add one!</p>
+<% end %>

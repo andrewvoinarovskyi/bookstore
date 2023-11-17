@@ -36,33 +36,48 @@ RSpec.describe BooksController, type: :controller do
     end
 
     it 'assigns the requested book to @book' do
-      book = FactoryBot.create(:book)
-
       get :show, params: { id: book.id }
       expect(assigns(:book)).to eq(book)
     end
   end
 
   describe 'POST #purchase' do
-    it 'creates an order for the current user' do
-      log_in user
-      post :purchase, params: { id: book.id }
-      expect(user.orders.count).to eq(1)
+    context 'when user is logged in' do
+      before do
+        log_in user
+      end
+
+      it 'creates an order for the current user' do
+        post :purchase, params: { id: book.id }
+        expect(user.orders.count).to eq(1)
+      end
+
+      it 'creates an order item for the purchased book' do
+        post :purchase, params: { id: book.id }
+        order_item = user.orders.first.order_items.first
+        expect(order_item.book).to eq(book)
+        expect(order_item.quantity).to eq(1)
+      end
+
+      it 'updates the order total price and status' do
+        post :purchase, params: { id: book.id }
+        order = user.orders.first
+        expect(order.total_price).to eq(book.price)
+        expect(order.status).to eq('completed')
+      end
+
+      it 'redirects to the purchased action' do
+        post :purchase, params: { id: book.id }
+        expect(response).to redirect_to(purchased_book_path)
+      end
     end
 
-    it 'creates an order item for the purchased book' do
-      log_in user
-      post :purchase, params: { id: book.id }
-      order_item = user.orders.first.order_items.first
-      expect(order_item.book).to eq(book)
-      expect(order_item.quantity).to eq(1)
-    end
-
-    it 'redirects to the root path with a success notice' do
-      log_in user
-      post :purchase, params: { id: book.id }
-      expect(response).to redirect_to(root_path)
-      expect(flash[:notice]).to eq('Book was successfully purchased.')
+    context 'when user is not logged in' do
+      it 'redirects to login_path with an alert' do
+        post :purchase, params: { id: book.id }
+        expect(response).to redirect_to(login_path)
+        expect(flash[:alert]).to eq('You must be logged in to purchase a book.')
+      end
     end
   end
 end

@@ -1,0 +1,23 @@
+<%= form_with(model: [book, Review.new]) do |form| %>
+  <h2>Add a Review</h2>
+
+  <% if form.object.errors.any? %>
+    <div id="error_explanation">
+      <h3><%= pluralize(form.object.errors.count, "error") %> prohibited this review from being saved:</h3>
+
+      <ul>
+        <% form.object.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.label :rating %>
+  <%= form.number_field :rating, min: 1, max: 5 %>
+
+  <%= form.label :comment %>
+  <%= form.text_area :comment %>
+
+  <%= form.submit 'Submit Review', class: 'btn btn-primary' %>
+<% end %>

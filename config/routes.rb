@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create]
   resources :books, only: [:index, :show] do
     member do
+      get 'purchased'
       post 'purchase'
     end
     resources :reviews, only: [:new, :create, :edit, :update, :destroy]
