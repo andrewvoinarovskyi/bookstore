@@ -10,6 +10,11 @@ RSpec.describe Order, type: :model do
       expect(Order.reflect_on_association(:order_items).macro).to eq(:has_many)
       expect(Order.reflect_on_association(:order_items).options[:dependent]).to eq(:destroy)
     end
+
+    it 'has many books through order_items' do
+      expect(Order.reflect_on_association(:books).macro).to eq(:has_many)
+      expect(Order.reflect_on_association(:books).options[:through]).to eq(:order_items)
+    end
   end
 
   describe 'validations' do

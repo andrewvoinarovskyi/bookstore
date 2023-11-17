@@ -79,5 +79,36 @@ RSpec.describe BooksController, type: :controller do
         expect(flash[:alert]).to eq('You must be logged in to purchase a book.')
       end
     end
+    describe 'GET #purchased_books' do
+      context 'when user is logged in' do
+        before do
+          log_in user
+        end
+
+        it 'returns a successful response' do
+          get :purchased_books
+          expect(response).to be_successful
+        end
+
+        it 'renders the purchased_books template' do
+          get :purchased_books
+          expect(response).to render_template(:purchased_books)
+        end
+
+        it 'assigns purchased books to @purchased_books' do
+          post :purchase, params: { id: book.id }
+          get :purchased_books
+          expect(assigns(:purchased_books)).to eq([book])
+        end
+      end
+
+      context 'when user is not logged in' do
+        it 'redirects to login path with an alert' do
+          get :purchased_books
+          expect(response).to redirect_to(login_path)
+          expect(flash[:alert]).to eq('You must be signed in to access this page.')
+        end
+      end
+    end
   end
 end
