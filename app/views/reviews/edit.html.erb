@@ -1,0 +1,11 @@
+<%= form_with(model: [@book, @review], local: true) do |form| %>
+  <h2>Edit Review</h2>
+
+  <%= form.label :rating %>
+  <%= form.number_field :rating, min: 1, max: 5 %>
+
+  <%= form.label :comment %>
+  <%= form.text_area :comment %>
+
+  <%= form.submit 'Update Review', class: 'btn btn-primary' %>
+<% end %>

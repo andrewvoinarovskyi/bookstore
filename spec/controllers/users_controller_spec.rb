@@ -26,9 +26,9 @@ RSpec.describe UsersController, type: :controller do
         expect(session[:user_id]).to be_present
       end
 
-      it 'redirects to the root path' do
+      it 'redirects to the login path' do
         post :create, params: { user: FactoryBot.attributes_for(:user) }
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(login_path)
       end
     end
 

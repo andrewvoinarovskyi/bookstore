@@ -9,6 +9,20 @@ RSpec.describe User, type: :model do
     it 'should have many orders' do
       expect(described_class.reflect_on_association(:orders).macro).to eq :has_many
     end
+
+    it 'belongs to a user' do
+      expect(Order.reflect_on_association(:user).macro).to eq(:belongs_to)
+    end
+
+    it 'has many order_items' do
+      expect(Order.reflect_on_association(:order_items).macro).to eq(:has_many)
+      expect(Order.reflect_on_association(:order_items).options[:dependent]).to eq(:destroy)
+    end
+
+    it 'has many books through order_items' do
+      expect(Order.reflect_on_association(:books).macro).to eq(:has_many)
+      expect(Order.reflect_on_association(:books).options[:through]).to eq(:order_items)
+    end
   end
 
   describe 'validations' do

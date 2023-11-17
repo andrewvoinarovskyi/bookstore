@@ -25,6 +25,14 @@ class BooksController < ApplicationController
   def purchased
   end
 
+  def purchased_books
+    if current_user
+      @purchased_books = current_user.purchased_books.distinct
+    else
+      redirect_to login_path, alert: 'You must be signed in to access this page.'
+    end
+  end
+
   private
 
   def set_book

@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   def new
-    @user = User.new
+    if current_user
+      redirect_to purchased_books_books_path
+    else
+      @user = User.new
+    end
   end
 
   def create

@@ -5,6 +5,11 @@ Rails.application.routes.draw do
       get 'purchased'
       post 'purchase'
     end
+
+    collection do
+      get 'purchased_books'
+    end
+
     resources :reviews, only: [:new, :create, :edit, :update, :destroy]
   end
 

@@ -4,14 +4,25 @@ RSpec.describe SessionsController, type: :controller do
   let(:user) { FactoryBot.create(:user) }
 
   describe 'GET #new' do
-    it 'returns a successful response' do
-      get :new
-      expect(response).to be_successful
+    context 'when user is not logged in' do
+      it 'returns a successful response' do
+        get :new
+        expect(response).to be_successful
+      end
+
+      it 'renders the new template' do
+        get :new
+        expect(response).to render_template(:new)
+      end
     end
 
-    it 'renders the new template' do
-      get :new
-      expect(response).to render_template(:new)
+    context 'when user is already logged in' do
+      before { log_in(user) }
+
+      it 'redirects to the root path' do
+        get :new
+        expect(response).to redirect_to(root_path)
+      end
     end
   end
 
@@ -22,9 +33,9 @@ RSpec.describe SessionsController, type: :controller do
         expect(session[:user_id]).to eq(user.id)
       end
 
-      it 'redirects to the root path' do
+      it 'redirects to the purchased books path' do
         post :create, params: { email: user.email, password: user.password }
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(purchased_books_books_path)
       end
     end
 
