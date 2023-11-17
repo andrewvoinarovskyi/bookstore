@@ -6,6 +6,11 @@
         <strong><%= review.user.name %>:</strong><br/>
         <%= "Rating: #{review.rating}" %><br/>
         <%= "Comment: #{review.comment}" %>
+
+        <% if current_user == review.user %>
+          <%= link_to 'Edit', edit_book_review_path(review.book, review) %>
+          <%= button_to 'Delete', book_review_path(review.book, review), method: :delete %>
+        <% end %>
       </li>
     <% end %>
   </ul>

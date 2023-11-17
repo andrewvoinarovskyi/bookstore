@@ -2,6 +2,7 @@ class ReviewsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_book
   before_action :set_review, only: [:edit, :update, :destroy]
+  before_action :authorize_user, only: [:edit, :update, :destroy]
 
   def new
     @review = @book.reviews.build
@@ -14,9 +15,9 @@ class ReviewsController < ApplicationController
       redirect_to @book, notice: 'Review was successfully created.'
     else
       if review_params[:rating].empty?
-        redirect_to '/books/show', notice: 'Review creation was failed. Rating is required.'
+        redirect_to book_path(@book), notice: 'Review creation was failed. Rating is required.'
       else
-        redirect_to '/books/show', notice: 'Review creation was failed. Comment is required.'
+        redirect_to book_path(@book), notice: 'Review creation was failed. Comment is required.'
       end
     end
   end
@@ -29,7 +30,7 @@ class ReviewsController < ApplicationController
     if @review.update(review_params)
       redirect_to @book, notice: 'Review was successfully updated.'
     else
-      render :edit
+      redirect_to book_path(@book), notice: 'Review updating was failed.'
     end
   end
 
@@ -50,5 +51,11 @@ class ReviewsController < ApplicationController
 
   def review_params
     params.require(:review).permit(:rating, :comment)
+  end
+
+  def authorize_user
+    unless current_user == @review.user
+      redirect_to book_path(@book), alert: 'You are not authorized to perform this action.'
+    end
   end
 end
